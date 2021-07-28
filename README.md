@@ -97,6 +97,24 @@ TAMPILAN / SKRINSUT :
 </p>
 
 
+<p>
+<img src="tmp_tampilan/11.png" width="100%"> 
+</p>
+
+<p>
+<img src="tmp_tampilan/12.png" width="100%"> 
+</p>
+
+
+<p>
+<img src="tmp_tampilan/13.png" width="100%"> 
+</p>
+
+
+<p>
+<img src="tmp_tampilan/14.png" width="100%"> 
+</p>
+
 
 
 
