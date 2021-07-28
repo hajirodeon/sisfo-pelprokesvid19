@@ -21,16 +21,16 @@ session_start();
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admketua.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminketua.html");
 
 nocache;
 
 //nilai
-$filenya = "entri.php";
-$judul = "History Entri";
-$judul = "[SETTING]. History Entri";
+$filenya = "orang.php";
+$judul = "Per Pelanggar";
+$judul = "[REKAP]. Per Pelanggar";
 $judulku = "$judul";
 $judulx = $judul;
 $kd = nosql($_REQUEST['kd']);
@@ -70,6 +70,9 @@ if ($_POST['btnCARI'])
 	xloc($ke);
 	exit();
 	}
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -85,8 +88,7 @@ ob_start();
 
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
-									"AND dibaca = 'false'");
+									"WHERE dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
 echo $jml_notif;
@@ -94,7 +96,6 @@ echo $jml_notif;
 //isi
 $i_loker = ob_get_contents();
 ob_end_clean();
-
 
 
 
@@ -130,20 +131,18 @@ require("../../template/js/swap.js");
 //jika null
 if (empty($kunci))
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"ORDER BY postdate DESC";
+	$sqlcount = "SELECT * FROM m_warga ".
+					"ORDER BY nama ASC";
 	}
 	
 else
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"AND (postdate LIKE '%$kunci%' ".
-					"OR ket LIKE '%$kunci%') ".
-					"ORDER BY postdate DESC";
+	$sqlcount = "SELECT * FROM m_warga ".
+					"WHERE nama LIKE '%$kunci%' ".
+					"OR nik LIKE '%$kunci%' ".
+					"OR lahir_tgl LIKE '%$kunci%' ".
+					"OR telp LIKE '%$kunci%' ".
+					"ORDER BY nama ASC";
 	}
 	
 	
@@ -175,7 +174,9 @@ echo '<form action="'.$filenya.'" method="post" name="formx">
 <thead>
 
 <tr valign="top" bgcolor="'.$warnaheader.'">
-<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
+<td><strong><font color="'.$warnatext.'">NAMA</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TGL_LAHIR</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TELP</font></strong></td>
 <td><strong><font color="'.$warnatext.'">KETERANGAN</font></strong></td>
 </tr>
 </thead>
@@ -198,19 +199,54 @@ if ($count != 0)
 
 		$nomer = $nomer + 1;
 		$i_kd = nosql($data['kd']);
-		$i_postdate = balikin($data['postdate']);
-		$i_ket = balikin($data['ket']);
-		
-		
-		//update
-		mysqli_query($koneksi, "UPDATE petugas_history_entri SET dibaca = 'true', ".
-									"dibaca_postdate = '$today' ".
-									"WHERE kd = '$i_kd'");
-		
+		$i_nama = balikin($data['nama']);
+		$i_nik = balikin($data['nik']);
+		$i_lahir_tgl = balikin($data['lahir_tgl']);
+		$i_telp = balikin($data['telp']);
+
 		
 		echo "<tr valign=\"top\" bgcolor=\"$warna\" onmouseover=\"this.bgColor='$warnaover';\" onmouseout=\"this.bgColor='$warna';\">";
-		echo '<td>'.$i_postdate.'</td>
-		<td>'.$i_ket.'</td>
+		echo '<td>
+		'.$i_nama.'
+		<br>
+		NIK. '.$i_nik.'
+		</td>
+		<td>'.$i_lahir_tgl.'</td>
+		<td>'.$i_telp.'</td>
+		<td>';
+		
+		//rincian pelanggaran
+		$qmboh = mysqli_query($koneksi, "SELECT * FROM petugas_entri ".
+											"WHERE warga_kd = '$i_kd' ".
+											"ORDER BY postdate DESC");
+		$rmboh = mysqli_fetch_assoc($qmboh);
+		$tmboh = mysqli_num_rows($qmboh);
+		
+		
+		echo '[<font color="red"><b>'.$tmboh.'</b></font> Pelanggaran].
+		<hr>';
+		
+		
+		//jika ada
+		if (!empty($tmboh))
+			{
+			echo "<ul>";
+			do
+				{
+				//nilai
+				$mboh_postdate = balikin($rmboh['postdate']);
+				$mboh_kec = balikin($rmboh['kecamatan']);
+				$mboh_tempat = balikin($rmboh['alamat_googlemap']);
+				
+				echo "<li>[$mboh_postdate]. [$mboh_kec], $mboh_tempat </li>";	
+				}
+			while ($rmboh = mysqli_fetch_assoc($qmboh));
+			
+			echo "</ul>";
+			}
+		
+		
+		echo '</td>
         </tr>';
 		}
 	while ($data = mysqli_fetch_assoc($result));
@@ -236,6 +272,9 @@ echo '</tbody>
 </tr>
 </table>
 </form>';
+
+
+
 
 
 

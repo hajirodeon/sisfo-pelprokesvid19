@@ -522,7 +522,7 @@ ob_start();
 </style>
 
 
-<h3>POSISI PETA SATGAS SAAT INI</h3>
+<h3>LOKASI SAAT INI</h3>
 <div id="map_wrapper">
     <div id="map_canvas" class="mapping"></div>
 </div>

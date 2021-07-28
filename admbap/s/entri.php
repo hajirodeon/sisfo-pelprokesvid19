@@ -21,9 +21,9 @@ session_start();
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admbap.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminbap.html");
 
 nocache;
 
@@ -85,7 +85,7 @@ ob_start();
 
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
+									"WHERE petugas_kode = '$username4_session' ".
 									"AND dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
@@ -131,7 +131,7 @@ require("../../template/js/swap.js");
 if (empty($kunci))
 	{
 	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
+					"WHERE petugas_kd = '$kd4_session' ".
 					"AND petugas_tipe = 'PETUGAS' ".
 					"ORDER BY postdate DESC";
 	}
@@ -139,7 +139,7 @@ if (empty($kunci))
 else
 	{
 	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
+					"WHERE petugas_kd = '$kd4_session' ".
 					"AND petugas_tipe = 'PETUGAS' ".
 					"AND (postdate LIKE '%$kunci%' ".
 					"OR ket LIKE '%$kunci%') ".

@@ -21,16 +21,16 @@ session_start();
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admketua.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminketua.html");
 
 nocache;
 
 //nilai
-$filenya = "entri.php";
-$judul = "History Entri";
-$judul = "[SETTING]. History Entri";
+$filenya = "kecamatan.php";
+$judul = "Per Kecamatan";
+$judul = "[REKAP]. Per Kecamatan";
 $judulku = "$judul";
 $judulx = $judul;
 $kd = nosql($_REQUEST['kd']);
@@ -85,8 +85,7 @@ ob_start();
 
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
-									"AND dibaca = 'false'");
+									"WHERE dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
 echo $jml_notif;
@@ -94,6 +93,7 @@ echo $jml_notif;
 //isi
 $i_loker = ob_get_contents();
 ob_end_clean();
+
 
 
 
@@ -127,30 +127,17 @@ require("../../template/js/swap.js");
   
 <?php
 //view //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//jika null
-if (empty($kunci))
-	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"ORDER BY postdate DESC";
-	}
-	
-else
-	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"AND (postdate LIKE '%$kunci%' ".
-					"OR ket LIKE '%$kunci%') ".
-					"ORDER BY postdate DESC";
-	}
-	
-	
 
 //query
+$limit = 5;
 $p = new Pager();
 $start = $p->findStart($limit);
+
+
+
+$sqlcount = "SELECT DISTINCT date(date_format(postdate, '%Y-%m-%d')) AS tglku ".
+					"FROM petugas_entri ".
+					"ORDER BY postdate DESC";
 
 $sqlresult = $sqlcount;
 
@@ -163,21 +150,29 @@ $data = mysqli_fetch_array($result);
 
 
 echo '<form action="'.$filenya.'" method="post" name="formx">
-<p>
-<input name="kunci" type="text" value="'.$kunci2.'" size="20" class="btn btn-warning" placeholder="Kata Kunci...">
-<input name="btnCARI" type="submit" value="CARI" class="btn btn-danger">
-<input name="btnBTL" type="submit" value="RESET" class="btn btn-info">
-</p>
-	
-
 <div class="table-responsive">          
 <table class="table" border="1">
 <thead>
 
 <tr valign="top" bgcolor="'.$warnaheader.'">
-<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
-<td><strong><font color="'.$warnatext.'">KETERANGAN</font></strong></td>
-</tr>
+<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>';
+
+//list kecamatan
+$qku = mysqli_query($koneksi, "SELECT * FROM m_kecamatan ".
+									"ORDER BY kecamatan ASC");
+$rku = mysqli_fetch_assoc($qku);
+
+do
+	{
+	//nilai
+	$ku_kec = balikin($rku['kecamatan']);
+	
+	echo '<td><strong><font color="'.$warnatext.'">'.$ku_kec.'</font></strong></td>';
+	}
+while ($rku = mysqli_fetch_assoc($qku));
+
+
+echo '</tr>
 </thead>
 <tbody>';
 
@@ -198,20 +193,55 @@ if ($count != 0)
 
 		$nomer = $nomer + 1;
 		$i_kd = nosql($data['kd']);
-		$i_postdate = balikin($data['postdate']);
-		$i_ket = balikin($data['ket']);
+		//$i_postdate = balikin($data['postdate']);
+		$i_tglku = balikin($data['tglku']);
 		
 		
-		//update
-		mysqli_query($koneksi, "UPDATE petugas_history_entri SET dibaca = 'true', ".
-									"dibaca_postdate = '$today' ".
-									"WHERE kd = '$i_kd'");
-		
-		
+
 		echo "<tr valign=\"top\" bgcolor=\"$warna\" onmouseover=\"this.bgColor='$warnaover';\" onmouseout=\"this.bgColor='$warna';\">";
-		echo '<td>'.$i_postdate.'</td>
-		<td>'.$i_ket.'</td>
-        </tr>';
+		echo '<td>'.$i_tglku.'</td>';
+		
+
+
+
+		
+		//list kecamatan
+		$qku = mysqli_query($koneksi, "SELECT * FROM m_kecamatan ".
+											"ORDER BY kecamatan ASC");
+		$rku = mysqli_fetch_assoc($qku);
+		
+		do
+			{
+			//nilai
+			$ku_kec = balikin($rku['kecamatan']);
+			$ku_kec2 = cegah($rku['kecamatan']);
+			
+			
+			
+			//ketahui jumlahnya
+			$qyus = mysqli_query($koneksi, "SELECT * FROM petugas_entri ".
+												"WHERE kecamatan = '$ku_kec2' ".
+												"AND postdate LIKE '$i_tglku%'");
+			$tyus = mysqli_num_rows($qyus);
+			
+			
+			
+			
+			//jika ada
+			if (!empty($tyus))
+				{
+				echo '<td align="center"><strong><font color="red">'.$tyus.'</font></strong></td>';
+				}
+			else
+				{
+				echo '<td align="center">-</td>';
+				}
+			}
+		while ($rku = mysqli_fetch_assoc($qku));
+		
+				
+		
+		echo '</tr>';
 		}
 	while ($data = mysqli_fetch_assoc($result));
 	}
@@ -222,7 +252,7 @@ echo '</tbody>
   </div>
 
 
-<table width="500" border="0" cellspacing="0" cellpadding="3">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td>
 <strong><font color="#FF0000">'.$count.'</font></strong> Data. '.$pagelist.'

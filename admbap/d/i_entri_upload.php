@@ -55,7 +55,7 @@ if (!file_exists('../../filebox/warga/'.$wargakd.'/'.$pelkd.'')) {
 
 
 
-$namabaru = "$pelkd-1.jpg";
+$namabaru = "$pelkd-4.jpg";
 
 
 

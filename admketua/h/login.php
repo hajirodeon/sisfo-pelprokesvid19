@@ -21,16 +21,16 @@ session_start();
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admketua.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminketua.html");
 
 nocache;
 
 //nilai
-$filenya = "entri.php";
-$judul = "History Entri";
-$judul = "[SETTING]. History Entri";
+$filenya = "login.php";
+$judul = "History Login";
+$judul = "[HISTORY]. History Login";
 $judulku = "$judul";
 $judulx = $judul;
 $kd = nosql($_REQUEST['kd']);
@@ -77,7 +77,6 @@ if ($_POST['btnCARI'])
 
 
 
-
 //isi *START
 ob_start();
 
@@ -85,8 +84,7 @@ ob_start();
 
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
-									"AND dibaca = 'false'");
+									"WHERE dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
 echo $jml_notif;
@@ -94,10 +92,6 @@ echo $jml_notif;
 //isi
 $i_loker = ob_get_contents();
 ob_end_clean();
-
-
-
-
 
 
 
@@ -130,19 +124,17 @@ require("../../template/js/swap.js");
 //jika null
 if (empty($kunci))
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
+	$sqlcount = "SELECT * FROM petugas_login ".
 					"ORDER BY postdate DESC";
 	}
 	
 else
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"AND (postdate LIKE '%$kunci%' ".
-					"OR ket LIKE '%$kunci%') ".
+	$sqlcount = "SELECT * FROM petugas_login ".
+					"WHERE petugas_kode LIKE '%$kunci%' ".
+					"OR petugas_nama LIKE '%$kunci%' ".
+					"OR petugas_tipe LIKE '%$kunci%' ".
+					"OR ipnya LIKE '%$kunci%' ".
 					"ORDER BY postdate DESC";
 	}
 	
@@ -175,8 +167,10 @@ echo '<form action="'.$filenya.'" method="post" name="formx">
 <thead>
 
 <tr valign="top" bgcolor="'.$warnaheader.'">
-<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
-<td><strong><font color="'.$warnatext.'">KETERANGAN</font></strong></td>
+<td width="200"><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
+<td><strong><font color="'.$warnatext.'">PETUGAS</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TIPE USER</font></strong></td>
+<td><strong><font color="'.$warnatext.'">IP ADDRESS</font></strong></td>
 </tr>
 </thead>
 <tbody>';
@@ -199,18 +193,20 @@ if ($count != 0)
 		$nomer = $nomer + 1;
 		$i_kd = nosql($data['kd']);
 		$i_postdate = balikin($data['postdate']);
-		$i_ket = balikin($data['ket']);
-		
-		
-		//update
-		mysqli_query($koneksi, "UPDATE petugas_history_entri SET dibaca = 'true', ".
-									"dibaca_postdate = '$today' ".
-									"WHERE kd = '$i_kd'");
-		
+		$i_kode = balikin($data['petugas_kode']);
+		$i_nama = balikin($data['petugas_nama']);
+		$i_tipe = balikin($data['petugas_tipe']);
+		$i_ipnya = balikin($data['ipnya']);
 		
 		echo "<tr valign=\"top\" bgcolor=\"$warna\" onmouseover=\"this.bgColor='$warnaover';\" onmouseout=\"this.bgColor='$warna';\">";
 		echo '<td>'.$i_postdate.'</td>
-		<td>'.$i_ket.'</td>
+		<td>
+		'.$i_nama.'
+		<br>
+		'.$i_kode.'
+		</td>
+		<td>'.$i_tipe.'</td>
+		<td>'.$i_ipnya.'</td>
         </tr>';
 		}
 	while ($data = mysqli_fetch_assoc($result));

@@ -14,23 +14,21 @@
 //////////////////////////////////////////////////////////////////////
 
 
-
-
 session_start();
 
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admketua.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminketua.html");
 
 nocache;
 
 //nilai
-$filenya = "entri.php";
-$judul = "History Entri";
-$judul = "[SETTING]. History Entri";
+$filenya = "warga.php";
+$judul = "Peringkat Pelanggar Warga";
+$judul = "[HISTORY]. Peringkat Pelanggar Warga";
 $judulku = "$judul";
 $judulx = $judul;
 $kd = nosql($_REQUEST['kd']);
@@ -77,7 +75,6 @@ if ($_POST['btnCARI'])
 
 
 
-
 //isi *START
 ob_start();
 
@@ -85,8 +82,7 @@ ob_start();
 
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
-									"AND dibaca = 'false'");
+									"WHERE dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
 echo $jml_notif;
@@ -94,10 +90,6 @@ echo $jml_notif;
 //isi
 $i_loker = ob_get_contents();
 ob_end_clean();
-
-
-
-
 
 
 
@@ -130,20 +122,19 @@ require("../../template/js/swap.js");
 //jika null
 if (empty($kunci))
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"ORDER BY postdate DESC";
+	$sqlcount = "SELECT * FROM m_warga ".
+					"ORDER BY round(jml_entri) DESC";
 	}
 	
 else
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"AND (postdate LIKE '%$kunci%' ".
-					"OR ket LIKE '%$kunci%') ".
-					"ORDER BY postdate DESC";
+	$sqlcount = "SELECT * FROM m_warga ".
+					"WHERE kecamatan LIKE '%$kunci%' ".
+					"OR nik LIKE '%$kunci%' ".
+					"OR nama LIKE '%$kunci%' ".
+					"OR lahir_tgl LIKE '%$kunci%' ".
+					"OR telp LIKE '%$kunci%' ".
+					"ORDER BY round(jml_entri) DESC";
 	}
 	
 	
@@ -175,8 +166,12 @@ echo '<form action="'.$filenya.'" method="post" name="formx">
 <thead>
 
 <tr valign="top" bgcolor="'.$warnaheader.'">
-<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
-<td><strong><font color="'.$warnatext.'">KETERANGAN</font></strong></td>
+<td width="50"><strong><font color="'.$warnatext.'">JML. MELANGGAR</font></strong></td>
+<td><strong><font color="'.$warnatext.'">NAMA</font></strong></td>
+<td><strong><font color="'.$warnatext.'">NIK</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TGL. LAHIR</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TELEPON</font></strong></td>
+<td><strong><font color="'.$warnatext.'">TERAKHIR PADA</font></strong></td>
 </tr>
 </thead>
 <tbody>';
@@ -198,19 +193,39 @@ if ($count != 0)
 
 		$nomer = $nomer + 1;
 		$i_kd = nosql($data['kd']);
-		$i_postdate = balikin($data['postdate']);
-		$i_ket = balikin($data['ket']);
+		$i_lahir_tgl = balikin($data['lahir_tgl']);
+		$i_kec = balikin($data['kecamatan']);
+		$i_petugas = balikin($data['petugas_nama']);
+		$i_nik = balikin($data['nik']);
+		$i_nama = balikin($data['nama']);
+		$i_lahir_tgl = balikin($data['lahir_tgl']);
+		$i_telp = balikin($data['telp']);
+		$i_jml_entri = balikin($data['jml_entri']);
 		
-		
-		//update
-		mysqli_query($koneksi, "UPDATE petugas_history_entri SET dibaca = 'true', ".
-									"dibaca_postdate = '$today' ".
-									"WHERE kd = '$i_kd'");
-		
-		
+
+		//terakhir tertangkap
+		$qyuk21 = mysqli_query($koneksi, "SELECT * FROM petugas_entri ".
+											"WHERE warga_kd = '$i_kd' ".
+											"ORDER BY postdate DESC");
+		$ryuk21 = mysqli_fetch_assoc($qyuk21);
+		$yuk21_alamat = balikin($ryuk21['alamat_googlemap']);
+		$yuk21_latx = balikin($ryuk21['lat_x']);
+		$yuk21_laty = balikin($ryuk21['lat_y']);
+		$yuk21_postdate = balikin($ryuk21['postdate']);
+
+
 		echo "<tr valign=\"top\" bgcolor=\"$warna\" onmouseover=\"this.bgColor='$warnaover';\" onmouseout=\"this.bgColor='$warna';\">";
-		echo '<td>'.$i_postdate.'</td>
-		<td>'.$i_ket.'</td>
+		echo '<td>'.$i_jml_entri.'</td>
+		<td>'.$i_nama.'</td>
+		<td>'.$i_nik.'</td>
+		<td>'.$i_lahir_tgl.'</td>
+		<td>'.$i_telp.'</td>
+		<td>
+		'.$yuk21_postdate.'
+		<br>
+		'.$yuk21_alamat.'
+		<br>
+		'.$yuk21_latx.', '.$yuk21_laty.'</td>
         </tr>';
 		}
 	while ($data = mysqli_fetch_assoc($result));

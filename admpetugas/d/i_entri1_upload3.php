@@ -55,7 +55,7 @@ if (!file_exists('../../filebox/warga/'.$wargakd.'/'.$pelkd.'')) {
 
 
 
-$namabaru = "$pelkd-1.jpg";
+$namabaru = "$pelkd-3.jpg";
 
 
 
@@ -73,10 +73,10 @@ unlink($foldernya.$namabaru);
 
 		  
 //upload.php;
-if(isset($_FILES["image_upload"]["name"])) 
+if(isset($_FILES["image_upload3"]["name"])) 
 {
- $name = $_FILES["image_upload"]["name"];
- $size = $_FILES["image_upload"]["size"];
+ $name = $_FILES["image_upload3"]["name"];
+ $size = $_FILES["image_upload3"]["size"];
  $ext = end(explode(".", $name));
  $allowed_ext = array("png", "jpg", "jpeg");
  if(in_array($ext, $allowed_ext))
@@ -87,17 +87,17 @@ if(isset($_FILES["image_upload"]["name"]))
    $new_image = '';
    $new_name = $namabaru;
    $path = "../../filebox/warga/$wargakd/$pelkd/$new_name";
-   list($width, $height) = getimagesize($_FILES["image_upload"]["tmp_name"]);
+   list($width, $height) = getimagesize($_FILES["image_upload3"]["tmp_name"]);
    if($ext == 'png')
    {
-    $new_image = imagecreatefrompng($_FILES["image_upload"]["tmp_name"]);
+    $new_image = imagecreatefrompng($_FILES["image_upload3"]["tmp_name"]);
     
     chmod($path,0777);
     chmod($foldernya,0777);
    }
    if($ext == 'jpg' || $ext == 'jpeg')  
             {  
-               $new_image = imagecreatefromjpeg($_FILES["image_upload"]["tmp_name"]);  
+               $new_image = imagecreatefromjpeg($_FILES["image_upload3"]["tmp_name"]);  
             }
             //$new_width=200;
             $new_width=1000;

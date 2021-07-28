@@ -20,16 +20,16 @@ session_start();
 require("../inc/config.php");
 require("../inc/fungsi.php");
 require("../inc/koneksi.php");
-require("../inc/cek/adm.php");
+require("../inc/cek/admketua.php");
 require("../inc/class/paging.php");
-$tpl = LoadTpl("../template/admin.html");
+$tpl = LoadTpl("../template/adminketua.html");
 
 
 nocache;
 
 //nilai
 $filenya = "index.php";
-$judul = "Admin Web";
+$judul = "Admin KETUA";
 
 
 
@@ -43,12 +43,12 @@ ob_start();
 echo '<div class="row">
 
   <div class="col-lg-12">
-    <div class="info-box mb-3 bg-primary">
+    <div class="info-box mb-3 bg-success">
       <span class="info-box-icon"><i class="fas fa-user-secret"></i></span>
 
       <div class="info-box-content">
         <span class="info-box-number">
-        		SISFO PELANGGARAN PROKES COVID-19
+        		KETUA/PIMPINAN
 			</span>
       </div>
     </div>
@@ -139,17 +139,12 @@ $jml_pelanggaran = mysqli_num_rows($qyuk);
 
 
 
-
-
-
 //total bap
 $qyuk = mysqli_query($koneksi, "SELECT kd FROM petugas_entri ".
 									"WHERE bap_nomor <> '' ".
 									"ORDER BY postdate DESC");
 $ryuk = mysqli_fetch_assoc($qyuk);
 $jml_bap = mysqli_num_rows($qyuk);
-
-
 
 
 
@@ -785,7 +780,6 @@ function initialize() {
      
      
      
-     
 
 
 	<!-- Info boxes -->
@@ -923,10 +917,6 @@ function initialize() {
 
 </div>
  
-     
-
-
-
      
 
 
@@ -1358,7 +1348,7 @@ function initialize() {
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="<?php echo $sumber;?>/adm/h/pelanggaran.php" class="btn btn-sm btn-danger float-right">SELENGKAPNYA >></a>
+                <a href="<?php echo $sumber;?>/admketua/h/pelanggaran.php" class="btn btn-sm btn-danger float-right">SELENGKAPNYA >></a>
               </div>
               <!-- /.card-footer -->
             </div>
@@ -1449,7 +1439,7 @@ function initialize() {
 
 	              <!-- /.card-body -->
 	              <div class="card-footer clearfix">
-	                <a href="<?php echo $sumber;?>/adm/h/warga.php" class="btn btn-sm btn-danger float-right">SELENGKAPNYA >></a>
+	                <a href="<?php echo $sumber;?>/admketua/h/warga.php" class="btn btn-sm btn-danger float-right">SELENGKAPNYA >></a>
 	              </div>
 	              <!-- /.card-footer -->
 

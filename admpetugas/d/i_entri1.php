@@ -160,7 +160,7 @@ if ((isset($_GET['aksi']) && $_GET['aksi'] == 'form'))
 //lihat gambar
 if ((isset($_GET['aksi']) && $_GET['aksi'] == 'lihat'))
 	{
-	$e_filex1 = "../../filebox/$wargakd/$pelkd/$pelkd-1.jpg";
+	$e_filex1 = "../../filebox/warga/$wargakd/$pelkd/$pelkd-1.jpg";
 	
 	
 	//nek null foto
@@ -170,7 +170,7 @@ if ((isset($_GET['aksi']) && $_GET['aksi'] == 'lihat'))
 		}
 	else
 		{
-		$nil_foto = "$sumber/filebox/$wargakd/$pelkd/$pelkd-1.jpg";
+		$nil_foto = "$sumber/filebox/warga/$wargakd/$pelkd/$pelkd-1.jpg";
 		}
 		
 
@@ -178,6 +178,59 @@ if ((isset($_GET['aksi']) && $_GET['aksi'] == 'lihat'))
 	}
 	
 	
+
+
+
+
+
+//lihat gambar
+if ((isset($_GET['aksi']) && $_GET['aksi'] == 'lihat2'))
+	{
+	$e_filex1 = "../../filebox/warga/$wargakd/$pelkd/$pelkd-2.jpg";
+	
+	
+	//nek null foto
+	if (!file_exists($e_filex1))
+		{
+		$nil_foto = "$sumber/template/img/bg-black.png";
+		}
+	else
+		{
+		$nil_foto = "$sumber/filebox/warga/$wargakd/$pelkd/$pelkd-2.jpg";
+		}
+		
+
+	echo '<img src="'.$nil_foto.'" height="200">';
+	}
+
+
+
+
+
+
+//lihat gambar
+if ((isset($_GET['aksi']) && $_GET['aksi'] == 'lihat3'))
+	{
+	$e_filex1 = "../../filebox/warga/$wargakd/$pelkd/$pelkd-3.jpg";
+	
+	
+	//nek null foto
+	if (!file_exists($e_filex1))
+		{
+		$nil_foto = "$sumber/template/img/bg-black.png";
+		}
+	else
+		{
+		$nil_foto = "$sumber/filebox/warga/$wargakd/$pelkd/$pelkd-3.jpg";
+		}
+		
+
+	echo '<img src="'.$nil_foto.'" height="200">';
+	}
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>

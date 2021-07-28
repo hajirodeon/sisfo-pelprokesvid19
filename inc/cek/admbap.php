@@ -17,25 +17,24 @@
 
 
 ///cek session //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$kd3_session = nosql($_SESSION['kd3_session']);
-$nama3_session = cegah($_SESSION['nama3_session']);
-$koramil3_session = cegah($_SESSION['koramil3_session']);
-$username3_session = cegah($_SESSION['username3_session']);
+$kd4_session = nosql($_SESSION['kd4_session']);
+$nama4_session = cegah($_SESSION['nama4_session']);
+$username4_session = cegah($_SESSION['username4_session']);
 $adm_session = cegah($_SESSION['adm_session']);
-$pass3_session = cegah($_SESSION['pass3_session']);
+$pass4_session = cegah($_SESSION['pass4_session']);
 $hajirobe_session = nosql($_SESSION['hajirobe_session']);
 
-$qbw = mysqli_query($koneksi, "SELECT * FROM m_koramil ".
-						"WHERE kd = '$kd3_session' ".
-						"AND usernamex = '$username3_session' ".
-						"AND passwordx = '$pass3_session'");
+$qbw = mysqli_query($koneksi, "SELECT * FROM m_petugas ".
+						"WHERE kd = '$kd4_session' ".
+						"AND usernamex = '$username4_session' ".
+						"AND passwordx = '$pass4_session'");
 $rbw = mysqli_fetch_assoc($qbw);
 $tbw = mysqli_num_rows($qbw);
 
 
-if ((empty($tbw)) OR (empty($kd3_session))
-	OR (empty($username3_session))
-	OR (empty($pass3_session))
+if ((empty($tbw)) OR (empty($kd4_session))
+	OR (empty($username4_session))
+	OR (empty($pass4_session))
 	OR (empty($adm_session))
 	OR (empty($hajirobe_session)))
 	{

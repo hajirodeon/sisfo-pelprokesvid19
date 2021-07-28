@@ -212,7 +212,7 @@ $.ajax({
 	<script>  
 	$(document).ready(function(){
 		
-	       $('#image-holder').load("<?php echo $sumber;?>/admpetugas/i_entri1.php?aksi=lihat&kd=<?php echo $kd;?>");
+	       $('#image-holder').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat&&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
 
 	
 	
@@ -225,7 +225,7 @@ $.ajax({
 	
 		
 		     $.ajax({
-		      url:"<?php echo $sumber;?>/admpetugas/i_entri1_upload.php?wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>",
+		      url:"<?php echo $sumber;?>/admpetugas/d/i_entri1_upload.php?wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>",
 		      method:"POST",
 		      data:new FormData(this),
 		      contentType:false,
@@ -233,7 +233,7 @@ $.ajax({
 		      processData:false,
 		      success:function(data){
 				$('#loading').hide();
-		       $('#preview').load("<?php echo $sumber;?>/admpetugas/i_entri1.php?aksi=lihat&kd=<?php echo $kd;?>");
+		       $('#preview').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat&&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
 		       	
 		      }
 		     })
@@ -242,6 +242,251 @@ $.ajax({
 		    
 	});  
 	</script>
+
+
+
+
+
+
+	
+
+
+
+
+	
+	
+		<table border="0" cellspacing="0" cellpadding="3">
+		<tr valign="top">
+		<td width="100">
+			<div id="image-holder2"></div>
+		</td>
+		
+
+		</tr>
+		</table>
+	
+	<script>
+	$(document).ready(function() {
+		
+		
+	        $("#image_upload2").on('change', function() {
+	          //Get count of selected files
+	          var countFiles = $(this)[0].files.length;
+	          var imgPath = $(this)[0].value;
+	          var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+	          var image_holder = $("#image-holder2");
+	          image_holder.empty();
+	          if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+	            if (typeof(FileReader) != "undefined") {
+	              //loop for each file selected for uploaded.
+	              for (var i = 0; i < countFiles; i++) 
+	              {
+	                var reader = new FileReader();
+	                reader.onload = function(e) {
+	                  $("<img />", {
+	                    "src": e.target.result,
+	                    "class": "thumb-image"
+	                  }).appendTo(image_holder);
+	                }
+	                image_holder.show();
+	                reader.readAsDataURL($(this)[0].files[i]);
+	              }
+	              
+	
+		    
+	            } else {
+	              alert("This browser does not support FileReader.");
+	            }
+	          } else {
+	            alert("Pls select only images");
+	          }
+	        });
+	        
+	        
+
+
+	        
+	        
+	        
+	      });
+	</script>
+
+	<?php
+	echo '<div id="loading2" style="display:none">
+	<img src="'.$sumber.'/template/img/progress-bar.gif" width="100" height="16">
+	</div>
+	
+	<b>FOTO FULL BADAN :<b> 
+   <form method="post" id="upload_image2" enctype="multipart/form-data">
+	<input type="file" name="image_upload2" id="image_upload2" class="btn btn-warning"  accept=".jpg, .jpeg, .png" required>
+
+   </form>
+   
+   <hr>';
+	
+	?>
+	
+	
+	<script>  
+	$(document).ready(function(){
+		
+	       $('#image-holder2').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat2&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
+
+	
+	
+	        
+	    $('#upload_image2').on('change', function(event){
+	     event.preventDefault();
+	     
+			$('#loading2').show();
+		
+		     $.ajax({
+		      url:"<?php echo $sumber;?>/admpetugas/d/i_entri1_upload2.php?wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>",
+		      method:"POST",
+		      data:new FormData(this),
+		      contentType:false,
+		      cache:false,
+		      processData:false,
+		      success:function(data){
+		      	
+				$('#loading2').hide();
+		       $('#preview2').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat2&&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
+		       	
+		      }
+		     })
+		    });
+		    
+		    
+	});  
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		<table border="0" cellspacing="0" cellpadding="3">
+		<tr valign="top">
+		<td width="100">
+			<div id="image-holder3"></div>
+		</td>
+		
+
+		</tr>
+		</table>
+	
+	<script>
+	$(document).ready(function() {
+		
+		
+	        $("#image_upload3").on('change', function() {
+	          //Get count of selected files
+	          var countFiles = $(this)[0].files.length;
+	          var imgPath = $(this)[0].value;
+	          var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+	          var image_holder = $("#image-holder3");
+	          image_holder.empty();
+	          if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+	            if (typeof(FileReader) != "undefined") {
+	              //loop for each file selected for uploaded.
+	              for (var i = 0; i < countFiles; i++) 
+	              {
+	                var reader = new FileReader();
+	                reader.onload = function(e) {
+	                  $("<img />", {
+	                    "src": e.target.result,
+	                    "class": "thumb-image"
+	                  }).appendTo(image_holder);
+	                }
+	                image_holder.show();
+	                reader.readAsDataURL($(this)[0].files[i]);
+	              }
+	              
+	
+		    
+	            } else {
+	              alert("This browser does not support FileReader.");
+	            }
+	          } else {
+	            alert("Pls select only images");
+	          }
+	        });
+	        
+	        
+
+
+	        
+	        
+	        
+	      });
+	</script>
+
+	<?php
+	echo '<div id="loading3" style="display:none">
+	<img src="'.$sumber.'/template/img/progress-bar.gif" width="100" height="16">
+	</div>
+	
+	<b>FOTO BUKTI :<b> 
+   <form method="post" id="upload_image3" enctype="multipart/form-data">
+	<input type="file" name="image_upload3" id="image_upload3" class="btn btn-warning"  accept=".jpg, .jpeg, .png" required>
+
+   </form>
+   
+   <hr>';
+	
+	?>
+	
+	
+	<script>  
+	$(document).ready(function(){
+		
+	       $('#image-holder3').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat3&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
+
+	
+	
+	        
+	    $('#upload_image3').on('change', function(event){
+	     event.preventDefault();
+	     
+			$('#loading3').show();
+		
+		     $.ajax({
+		      url:"<?php echo $sumber;?>/admpetugas/d/i_entri1_upload3.php?wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>",
+		      method:"POST",
+		      data:new FormData(this),
+		      contentType:false,
+		      cache:false,
+		      processData:false,
+		      success:function(data){
+		      	
+				$('#loading3').hide();
+		       $('#preview3').load("<?php echo $sumber;?>/admpetugas/d/i_entri1.php?aksi=lihat3&&wargakd=<?php echo $wargakd;?>&pelkd=<?php echo $pelkd;?>");
+		       	
+		      }
+		     })
+		    });
+		    
+		    
+	});  
+	</script>
+
+
+
 
 
 

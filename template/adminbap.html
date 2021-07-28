@@ -41,7 +41,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed" onload="{diload}">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -57,7 +57,7 @@
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
 			
-			{i_siswa}
+			B.A.P
 
       </div>
     </form>
@@ -67,7 +67,7 @@
     	
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" href="{sumber}/admkor/s/entri.php">
+        <a class="nav-link" href="{sumber}/admbap/s/entri.php">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">{i_loker}</span>
         </a>
@@ -88,9 +88,9 @@
 
 
     <a href="#" class="brand-link">
-      <img src="{sumber}/img/logo.png" alt="KORAMIL" class="brand-image img-circle elevation-3"
+      <img src="{sumber}/img/logo.png" alt="B.A.P" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">KORAMIL</span>
+      <span class="brand-text font-weight-light">B.A.P</span>
     </a>
     
     
@@ -104,10 +104,20 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{sumber}/admkor/index.php" class="nav-link">
+            <a href="{sumber}/admbap/index.php" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 BERANDA
+              </p>
+            </a>
+          </li>
+          
+          
+          <li class="nav-item">
+            <a href="{sumber}/admbap/d/entri.php" class="nav-link">
+              <i class="nav-icon fa fa-pencil"></i>
+              <p>
+                ENTRI B.A.P
               </p>
             </a>
           </li>
@@ -124,46 +134,12 @@
 	            </a>
 	            <ul class="nav nav-treeview">
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/s/pass.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/s/pass.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
 	                  <p>Ganti Password</p>
 	                </a>
 	              </li>
 	              
-	              
-	              	            	
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/s/babinsa.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>User BABINSA</p>
-	                </a>
-	              </li>
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/s/login.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>History Login</p>
-	                </a>
-	              </li>
-	              
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/s/entri.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>History Entri</p>
-	                </a>
-	              </li>
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/s/gps.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>History GPS</p>
-	                </a>
-	              </li>
-
-
-
-
 
 	            </ul>
 	          </li>
@@ -171,68 +147,42 @@
 
 
 
-
-
             <li class="nav-item has-treeview">
 	            <a href="#" class="nav-link">
-	              <i class="nav-icon fa fa-pencil"></i>
+	              <i class="nav-icon fa fa-archive"></i>
 	              <p>
-	                SET VALUE MAX DATA
+	                HISTORY
 	                <i class="right fas fa-angle-left"></i>
 	              </p>
 	            </a>
 	            <ul class="nav nav-treeview">
-	            	
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/demografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Set Demografi</p>
-	                </a>
-	              </li>
 	              
-	              
-	            	
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/geografi.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/s/login.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Set Geografi</p>
-	                </a>
-	              </li>
-	              
-	            	
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/konsos.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Set Kondisi Sosial</p>
-	                </a>
-	              </li>
-
-
-	            	
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/stat_demografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Statistik Demografi</p>
+	                  <p>Login</p>
 	                </a>
 	              </li>
 	              
 
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/stat_geografi.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/s/entri.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Statistik Geografi</p>
-	                </a>
-	              </li>
-	              
-	            	
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/m/stat_konsos.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Statistik Kondisi Sosial</p>
+	                  <p>Entri</p>
 	                </a>
 	              </li>
 
-	              
+	              <li class="nav-item">
+	                <a href="{sumber}/admbap/s/gps.php" class="nav-link">&nbsp;&nbsp;
+	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
+	                  <p>GPS</p>
+	                </a>
+	              </li>
+
+
+
+
+
 	            </ul>
 	          </li>
 
@@ -242,140 +192,65 @@
 
             <li class="nav-item has-treeview">
 	            <a href="#" class="nav-link">
-	              <i class="nav-icon fa fa-newspaper-o"></i>
+	              <i class="nav-icon fa fa-briefcase"></i>
 	              <p>
-	                REKAP BULANAN
+	                LAPORAN
 	                <i class="right fas fa-angle-left"></i>
 	              </p>
 	            </a>
 	            <ul class="nav nav-treeview">
-
+	            	
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapbln/demografi.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/lap/kecamatan.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Demografi</p>
+	                  <p>Kecamatan</p>
 	                </a>
 	              </li>
-	
-
-
+	            	
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapbln/geografi.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/lap/bulan.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Geografi</p>
+	                  <p>Bulan</p>
 	                </a>
 	              </li>
-	
-
-
+	              
+	            	
 	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapbln/konsos.php" class="nav-link">&nbsp;&nbsp;
+	                <a href="{sumber}/admbap/lap/tgl.php" class="nav-link">&nbsp;&nbsp;
 	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per KONSOS</p>
+	                  <p>Tanggal</p>
 	                </a>
 	              </li>
-
+	              
+	            	
+	              <li class="nav-item">
+	                <a href="{sumber}/admbap/lap/pelanggaran.php" class="nav-link">&nbsp;&nbsp;
+	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
+	                  <p>Pelanggaran</p>
+	                </a>
+	              </li>
+	              
+	              
+	            	
+	              <li class="nav-item">
+	                <a href="{sumber}/admbap/lap/rangking.php" class="nav-link">&nbsp;&nbsp;
+	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
+	                  <p>Per Peringkat Pelanggar</p>
+	                </a>
+	              </li>
+	              
+	              
+	            	
+	              <li class="nav-item">
+	                <a href="{sumber}/admbap/lap/petugas.php" class="nav-link">&nbsp;&nbsp;
+	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
+	                  <p>Daftar Petugas</p>
+	                </a>
+	              </li>
+	              
 	              
 	            </ul>
 	          </li>
-
-
-
-
-
-
-
-          
-            <li class="nav-item has-treeview">
-	            <a href="#" class="nav-link">
-	              <i class="nav-icon fa fa-newspaper-o"></i>
-	              <p>
-	                REKAP TAHUNAN
-	                <i class="right fas fa-angle-left"></i>
-	              </p>
-	            </a>
-	            <ul class="nav nav-treeview">
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapthn/demografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Demografi</p>
-	                </a>
-	              </li>
-	
-
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapthn/geografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Geografi</p>
-	                </a>
-	              </li>
-	
-
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekapthn/konsos.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per KONSOS</p>
-	                </a>
-	              </li>
-
-	              
-	            </ul>
-	          </li>
-
-
-
-
-
-
-
-          
-            <li class="nav-item has-treeview">
-	            <a href="#" class="nav-link">
-	              <i class="nav-icon fa fa-newspaper-o"></i>
-	              <p>
-	                REKAP TRIWULAN
-	                <i class="right fas fa-angle-left"></i>
-	              </p>
-	            </a>
-	            <ul class="nav nav-treeview">
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekaptri/demografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Demografi</p>
-	                </a>
-	              </li>
-	
-
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekaptri/geografi.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per Geografi</p>
-	                </a>
-	              </li>
-	
-
-
-	              <li class="nav-item">
-	                <a href="{sumber}/admkor/rekaptri/konsos.php" class="nav-link">&nbsp;&nbsp;
-	                  <i class="fa fa-arrow-circle-right nav-icon"></i>
-	                  <p>Per KONSOS</p>
-	                </a>
-	              </li>
-
-	              
-	            </ul>
-	          </li>
-
-
-
-
-
-
 
 
 

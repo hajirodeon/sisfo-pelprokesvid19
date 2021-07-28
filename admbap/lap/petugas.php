@@ -18,21 +18,21 @@
 
 session_start();
 
+//ambil nilai
 require("../../inc/config.php");
 require("../../inc/fungsi.php");
 require("../../inc/koneksi.php");
-require("../../inc/cek/admpetugas.php");
+require("../../inc/cek/admbap.php");
 require("../../inc/class/paging.php");
-$tpl = LoadTpl("../../template/adminpetugas.html");
+$tpl = LoadTpl("../../template/adminbap.html");
 
 nocache;
 
 //nilai
-$filenya = "entri.php";
-$judul = "History Entri";
-$judul = "[SETTING]. History Entri";
+$filenya = "petugas.php";
+$judul = "[LAPORAN]. DAFTAR PETUGAS";
 $judulku = "$judul";
-$judulx = $judul;
+$juduli = $judul;
 $kd = nosql($_REQUEST['kd']);
 $s = nosql($_REQUEST['s']);
 $kunci = cegah($_REQUEST['kunci']);
@@ -42,6 +42,8 @@ if ((empty($page)) OR ($page == "0"))
 	{
 	$page = "1";
 	}
+
+
 
 
 
@@ -78,14 +80,22 @@ if ($_POST['btnCARI'])
 
 
 
+
+
+
+
+
+
+
+
+
 //isi *START
 ob_start();
 
 
-
 //jml notif
 $qyuk = mysqli_query($koneksi, "SELECT * FROM petugas_history_entri ".
-									"WHERE petugas_kode = '$username3_session' ".
+									"WHERE petugas_kode = '$username4_session' ".
 									"AND dibaca = 'false'");
 $jml_notif = mysqli_num_rows($qyuk);
 
@@ -105,8 +115,15 @@ ob_end_clean();
 
 
 
+
+
+
+
+
+
 //isi *START
 ob_start();
+
 
 
 //require
@@ -130,23 +147,29 @@ require("../../template/js/swap.js");
 //jika null
 if (empty($kunci))
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"ORDER BY postdate DESC";
+	$sqlcount = "SELECT * FROM m_petugas ".
+					"WHERE kode <> '' ".
+					"AND tipe_user = 'PETUGAS' ".
+					"AND kecamatan <> '' ".
+					"ORDER BY postdate_tugas DESC";
 	}
 	
 else
 	{
-	$sqlcount = "SELECT * FROM petugas_history_entri ".
-					"WHERE petugas_kd = '$kd3_session' ".
-					"AND petugas_tipe = 'PETUGAS' ".
-					"AND (postdate LIKE '%$kunci%' ".
-					"OR ket LIKE '%$kunci%') ".
+	$sqlcount = "SELECT * FROM m_petugas ".
+					"WHERE kode <> '' ".
+					"AND tipe_user = 'PETUGAS' ".
+					"AND kecamatan <> '' ".
+					"AND (postdate_tugas LIKE '%$kunci%' ".
+					"OR kecamatan LIKE '%$kunci%' ".
+					"OR alamat_googlemap LIKE '%$kunci%' ".
+					"OR lat_x LIKE '%$kunci%' ".
+					"OR lat_y LIKE '%$kunci%' ".
+					"OR kode LIKE '%$kunci%' ".
+					"OR nama LIKE '%$kunci%') ".
 					"ORDER BY postdate DESC";
 	}
-	
-	
+
 
 //query
 $p = new Pager();
@@ -175,8 +198,13 @@ echo '<form action="'.$filenya.'" method="post" name="formx">
 <thead>
 
 <tr valign="top" bgcolor="'.$warnaheader.'">
-<td><strong><font color="'.$warnatext.'">POSTDATE</font></strong></td>
-<td><strong><font color="'.$warnatext.'">KETERANGAN</font></strong></td>
+<td><strong><font color="'.$warnatext.'">POSTDATE TUGAS</font></strong></td>
+<td><strong><font color="'.$warnatext.'">KODE</font></strong></td>
+<td><strong><font color="'.$warnatext.'">NAMA</font></strong></td>
+<td><strong><font color="'.$warnatext.'">KECAMATAN</font></strong></td>
+<td><strong><font color="'.$warnatext.'">ALAMAT GOOGLEMAP</font></strong></td>
+<td><strong><font color="'.$warnatext.'">LAT</font></strong></td>
+<td><strong><font color="'.$warnatext.'">LONG</font></strong></td>
 </tr>
 </thead>
 <tbody>';
@@ -197,20 +225,25 @@ if ($count != 0)
 			}
 
 		$nomer = $nomer + 1;
-		$i_kd = nosql($data['kd']);
-		$i_postdate = balikin($data['postdate']);
-		$i_ket = balikin($data['ket']);
+		$e_kd = nosql($data['kd']);
+		$e_postdate = balikin($data['postdate_tugas']);
+		$e_kode = balikin($data['kode']);
+		$e_nama = balikin($data['nama']);
 		
-		
-		//update
-		mysqli_query($koneksi, "UPDATE petugas_history_entri SET dibaca = 'true', ".
-									"dibaca_postdate = '$today' ".
-									"WHERE kd = '$i_kd'");
-		
+		$e_alamat = balikin($data['alamat_googlemap']);
+		$e_latx = balikin($data['lat_x']);
+		$e_laty = balikin($data['lat_y']);
+		$e_kec = balikin($data['kecamatan']);
+
 		
 		echo "<tr valign=\"top\" bgcolor=\"$warna\" onmouseover=\"this.bgColor='$warnaover';\" onmouseout=\"this.bgColor='$warna';\">";
-		echo '<td>'.$i_postdate.'</td>
-		<td>'.$i_ket.'</td>
+		echo '<td>'.$e_postdate.'</td>
+		<td>'.$e_kode.'</td>
+		<td>'.$e_nama.'</td>
+		<td>'.$e_kec.'</td>
+		<td>'.$e_alamat.'</td>
+		<td>'.$e_latx.'</td>
+		<td>'.$e_laty.'</td>
         </tr>';
 		}
 	while ($data = mysqli_fetch_assoc($result));
@@ -222,7 +255,7 @@ echo '</tbody>
   </div>
 
 
-<table width="500" border="0" cellspacing="0" cellpadding="3">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td>
 <strong><font color="#FF0000">'.$count.'</font></strong> Data. '.$pagelist.'
@@ -239,6 +272,7 @@ echo '</tbody>
 
 
 
+
 //isi
 $isi = ob_get_contents();
 ob_end_clean();
@@ -246,7 +280,9 @@ ob_end_clean();
 require("../../inc/niltpl.php");
 
 
-//null-kan
+
+//diskonek
+xfree($qbw);
 xclose($koneksi);
 exit();
 ?>
